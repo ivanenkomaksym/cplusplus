@@ -57,22 +57,48 @@ private:
     double *array;
 };
 
-void foo(HugeVector v)
-{
-    return;
-}
 void foo_by_ref(HugeVector &v)
 {
     return;
 }
 
+void foo_by_value(HugeVector v)
+{
+    return;
+}
+
+void foo(HugeVector &v)
+{
+    return;
+}
+
+void foo(HugeVector &&v)
+{
+    return;
+}
+
+HugeVector getVector(int size, int value)
+{
+    return HugeVector(size, value);
+}
+
+// --- Perfect forwarding ---
+template <typename T>
+void relay(T &&arg)     // universal reference
+{
+    foo(std::forward<T>(arg));
+}
+
 void move_semantics()
 {
-    auto reusable = HugeVector(5000, 1.0);
+    auto reusable = getVector(5000, 1.0);
 
-    foo_by_ref(reusable);       // call no ctor
-    foo(reusable);              // call copy ctor
-    foo(std::move(reusable));   // call move ctor
+    foo_by_ref(reusable);               // call no ctor
+    foo_by_value(reusable);             // call copy ctor
+    foo_by_value(std::move(reusable));  // call move ctor
+
+    relay(reusable);                // T = int&& => T&& = int&& && = int&&; call foo(T&)
+    relay(getVector(5000, 1.0));    // T = int&  => T&& = int&  && = int&;  call foo(T&&)
 }
 
 #endif // MOVE_SEMANTICS_H
