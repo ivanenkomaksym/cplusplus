@@ -22,7 +22,9 @@ HEADERS += \
     move_semantics.h \
     literals.h \
     compiler_generated_functions.h \
-<<<<<<< HEAD
+<<<<<<< HEAD \
+    smart_pointers.h \
+    deducing_types.h
     smart_pointers.h
 =======
     deducing_types.h
