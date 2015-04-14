@@ -21,6 +21,7 @@ SOURCES += main.cpp
 HEADERS += \
     move_semantics.h \
     literals.h \
-    compiler_generated_functions.h
+    compiler_generated_functions.h \
+    deducing_types.h
 
 QMAKE_CXXFLAGS += -std=gnu++0x
