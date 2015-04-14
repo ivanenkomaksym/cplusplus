@@ -1,0 +1,4 @@
+#ifndef DEDUCING_TYPES_H
+#define DEDUCING_TYPES_H
+
+#endif // DEDUCING_TYPES_H

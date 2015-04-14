@@ -97,8 +97,8 @@ void move_semantics()
     foo_by_value(reusable);             // call copy ctor
     foo_by_value(std::move(reusable));  // call move ctor
 
-    relay(reusable);                // T = int&& => T&& = int&& && = int&&; call foo(T&)
-    relay(getVector(5000, 1.0));    // T = int&  => T&& = int&  && = int&;  call foo(T&&)
+    relay(getVector(5000, 1.0));    // T = int&& => T&& = int&& && = int&&; call foo(T&&)
+    relay(reusable);                // T = int&  => T&& = int&  && = int&;  call foo(T&)
 }
 
 #endif // MOVE_SEMANTICS_H
