@@ -1,6 +1,8 @@
 #ifndef COMPILER_GENERATED_FUNCTIONS_H
 #define COMPILER_GENERATED_FUNCTIONS_H
 
+#include <string>
+
 using namespace std;
 
 /*
@@ -21,8 +23,10 @@ using namespace std;
 
 class Dog
 {
+public:
     // C++ 03:
     Dog() {}
+    Dog(string name) {}
     Dog(const Dog &) {}
     Dog &operator = (const Dog &) {}
     ~Dog() {}

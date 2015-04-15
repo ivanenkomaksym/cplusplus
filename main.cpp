@@ -4,6 +4,9 @@
 #include "literals.h"
 #include "compiler_generated_functions.h"
 #include "cplusplus11features.h"
+#include "smart_pointers.h"
+
+using namespace SMART_POINTERS;
 
 int main()
 {
@@ -11,5 +14,8 @@ int main()
     move_semantics();
     literals();
     cplusplus11features();
+    shared_pointers();
+    weak_pointers();
+    unique_pointers();
     return 0;
 }

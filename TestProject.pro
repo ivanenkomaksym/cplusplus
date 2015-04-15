@@ -22,6 +22,8 @@ HEADERS += \
     move_semantics.h \
     literals.h \
     compiler_generated_functions.h \
+    smart_pointers.h \
+    smart_pointers.h \
     deducing_types.h \
     cplusplus11features.h
 
