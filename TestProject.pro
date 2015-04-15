@@ -22,6 +22,7 @@ HEADERS += \
     move_semantics.h \
     literals.h \
     compiler_generated_functions.h \
-    deducing_types.h
+    deducing_types.h \
+    cplusplus11features.h
 
 QMAKE_CXXFLAGS += -std=gnu++0x
