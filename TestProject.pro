@@ -10,7 +10,7 @@ QT       -= gui
 
 TARGET = TestProject
 CONFIG   += console
-CONFIG   += C++11
+CONFIG   += C++14
 CONFIG   -= app_bundle
 
 TEMPLATE = app
@@ -27,4 +27,4 @@ HEADERS += \
     deducing_types.h \
     cplusplus11features.h
 
-QMAKE_CXXFLAGS += -std=gnu++0x
+QMAKE_CXXFLAGS += -std=c++11
