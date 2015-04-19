@@ -5,6 +5,7 @@
 #include "compiler_generated_functions.h"
 #include "cplusplus11features.h"
 #include "smart_pointers.h"
+#include "resource_managing_class.h"
 
 using namespace SMART_POINTERS;
 
@@ -17,6 +18,7 @@ int main()
     shared_pointers();
     weak_pointers();
     unique_pointers();
+    resource_managing_class();
 
     return 0;
 }

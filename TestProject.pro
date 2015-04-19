@@ -25,6 +25,7 @@ HEADERS += \
     smart_pointers.h \
     smart_pointers.h \
     deducing_types.h \
-    cplusplus11features.h
+    cplusplus11features.h \
+    resource_managing_class.h
 
 QMAKE_CXXFLAGS += -std=c++11
