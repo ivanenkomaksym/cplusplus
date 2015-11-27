@@ -2,6 +2,7 @@
 #define MOVE_SEMANTICS_H
 
 #include <memory>
+#include <set>
 
 class HugeVector
 {
@@ -89,6 +90,16 @@ void relay(T &&arg)     // universal reference
     foo(std::forward<T>(arg));
 }
 
+std::multiset<std::string> names;
+
+template<typename T>
+void logAndAdd(T &&name)
+{
+    // auto now = std::chrono::system_clock::now();
+    // log(now, "logAndAdd");
+    names.emplace(std::forward<T>(name));
+}
+
 void move_semantics()
 {
     auto reusable = getVector(5000, 1.0);
@@ -99,6 +110,11 @@ void move_semantics()
 
     relay(getVector(5000, 1.0));    // T = int&& => T&& = int&& && = int&&; call foo(T&&)
     relay(reusable);                // T = int&  => T&& = int&  && = int&;  call foo(T&)
+
+    std::string petName("Darla");
+    logAndAdd(petName);                     // copy lvalue into multiset
+    logAndAdd(std::string("Persephone"));   // move rvalue instead of copying it
+    logAndAdd("Patty Dog");                 // create std::string in multiset instead of copying a temporary std::string
 }
 
 #endif // MOVE_SEMANTICS_H

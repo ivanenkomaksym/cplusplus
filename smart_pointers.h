@@ -29,6 +29,43 @@ namespace SMART_POINTERS
         string m_name;
     };
 
+    template<typename T, typename... Args>
+    std::unique_ptr<T> make_unique(Args&&... args) {
+        return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+    }
+
+    class Foo
+    {
+    public:
+        Foo(Foo &&rhs)
+        {}
+    };
+
+    class MyClass
+    {
+    public:
+        MyClass() = default;
+        MyClass(std::vector<std::unique_ptr<Foo>> foos) :
+            foos_(std::move(foos))
+        {};
+
+        std::vector<std::unique_ptr<Foo>> &getFoos() { return foos_; }
+
+        std::vector<std::unique_ptr<Foo>> foos_;
+    };
+
+    void bar(std::vector<std::unique_ptr<Foo>> &foos)
+    {
+
+    }
+
+    void vectorOfUniquePointers()
+    {
+        //auto test = MyClass(std::vector<std::unique_ptr<Foo>>()); //remove this, and all works fine!
+        auto myClass = make_unique<MyClass>();
+        bar(myClass->getFoos());
+    }
+
     void shared_pointers()
     {
         shared_ptr<Dog> p1 = make_shared<Dog>("Gunner");
@@ -76,8 +113,8 @@ namespace SMART_POINTERS
     //        cout << "pD is empty.\n";
     //    }
     //
-    //    unique_ptr<Dog> pD2 = getDog();
-    //    pD2->bark();
+        auto pD3 = getDog();
+        pD3->bark();
         // Custom deleter
         //shared_ptr<Dog> p3 = shared_ptr<Dog>(new Dog("Tank")
         //                                     , [](Dog *p) { cout << "Custom deleting." << endl; delete p;});
