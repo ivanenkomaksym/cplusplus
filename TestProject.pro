@@ -26,6 +26,7 @@ HEADERS += \
     smart_pointers.h \
     deducing_types.h \
     cplusplus11features.h \
-    resource_managing_class.h
+    resource_managing_class.h \
+    constness.h
 
 QMAKE_CXXFLAGS += -std=c++11
