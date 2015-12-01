@@ -10,9 +10,11 @@
 #include "enum_hack.h"
 #include "constness.h"
 
+#include <map>
 #include <string>
 
 using namespace SMART_POINTERS;
+using namespace COMPILER_GENERATED_FUNCTIONS;
 
 class Widget2
 {

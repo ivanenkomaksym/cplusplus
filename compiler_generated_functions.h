@@ -5,6 +5,8 @@
 
 using namespace std;
 
+namespace COMPILER_GENERATED_FUNCTIONS
+{
 /*
   C++ 03:
   1. default constructor (generated only if no constructor is declared by user)
@@ -131,7 +133,120 @@ private:
     bool closed;
 };
 
+class Transaction
+{
+public:
+    explicit Transaction(const std::string& logInfo)
+    {
+        // virtualLogTransaction();                         // Do not call virtual functions in ctors
+        logTransaction(logInfo);                                // non-virtual call
+    }
+    void logTransaction(const std::string& logInfo) const{}   // non-virtual func
 
+    virtual void virtualLogTransaction() const = 0;       // make type-dependent
+};
+
+class BuyTransaction: public Transaction
+{
+public:
+    BuyTransaction(const std::string& logInfo)
+        : Transaction(createLogString(logInfo))             // pass log info to base class ctor
+    {}
+
+    virtual void virtualLogTransaction() const override {}
+
+private:
+    static std::string createLogString(const std::string& logInfo) { return std::string("Some info"); }
+};
+
+class Bitmap{};
+
+class Widget
+{
+public:
+    Widget& operator+=(const Widget& rhs)   // the convention applies to +=, -=, *=, etc.
+    {
+        return *this;
+    }
+
+    Widget& operator=(const Widget& rhs)
+    {
+      Widget temp(rhs);             // make a copy of rhs's data
+      swap(temp);                   // swap *this's data with the copy's
+      return *this;
+    }
+
+    Widget& operator=(Widget rhs)   // rhs is a copy of the object
+    {                                       // passed in — note pass by val
+      swap(rhs);                            // swap *this's data with
+                                            // the copy's
+      return *this;
+    }
+
+private:
+    void swap(Widget& rhs){}   // exchange *this's and rhs's data;
+
+    Bitmap *pb;                 // ptr to a heap-allocated object
+};
+
+
+void logCall(const std::string& funcName)
+{
+    std::cout << funcName << std::endl;
+}
+
+class Date {};       // for dates in time
+
+class Customer
+{
+public:
+    explicit Customer() = default;
+    Customer(const Customer& rhs);
+    Customer& operator=(const Customer& rhs);
+
+private:
+    std::string name;
+    Date lastTransaction;
+};
+
+Customer::Customer(const Customer& rhs)
+    : name(rhs.name)                                 // copy rhs's data
+{
+    logCall("Customer copy constructor");
+}
+
+Customer& Customer::operator=(const Customer& rhs)
+{
+    logCall("Customer copy assignment operator");
+    name = rhs.name;                               // copy rhs's data
+    return *this;                                  // see Item 10
+}
+
+class PriorityCustomer: public Customer
+{
+public:
+    explicit PriorityCustomer() = default;
+    PriorityCustomer(const PriorityCustomer& rhs);
+    PriorityCustomer& operator=(const PriorityCustomer& rhs);
+
+private:
+    int priority;
+};
+
+PriorityCustomer::PriorityCustomer(const PriorityCustomer& rhs)
+    : Customer(rhs)                   // invoke base class copy ctor
+    , priority(rhs.priority)
+{
+    logCall("PriorityCustomer copy constructor");
+}
+
+PriorityCustomer& PriorityCustomer::operator=(const PriorityCustomer& rhs)
+{
+    logCall("PriorityCustomer copy assignment operator");
+    Customer::operator=(rhs);           // assign base class parts
+    priority = rhs.priority;
+    return *this;
+}
 
 void compiler_generated_functions()
 {
@@ -148,6 +263,13 @@ void compiler_generated_functions()
     //auto c = a;                       // Error: assignment operator not allowed
 
     DBConn dbc(DBConnection::create()); // Destructors should never emit exceptions
+
+    auto name = std::string("Text");
+    auto transaction = BuyTransaction(name);
+    auto customer1 = PriorityCustomer();
+    auto customer2 = PriorityCustomer();
+    customer1 = customer2;
 }
 
+}
 #endif // COMPILER_GENERATED_FUNCTIONS_H
